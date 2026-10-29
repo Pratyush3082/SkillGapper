@@ -1,0 +1,6 @@
+Flask
+Flask-SQLAlchemy
+Flask-CORS
+Flask-Bcrypt
+Pillow>=10.0
+pypdf>=5.0

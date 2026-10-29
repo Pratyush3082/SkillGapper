@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SkillGapper helps students understand their skills, track progress, and plan their careers.">
+  <title>SkillGapper | Student Dashboard</title>
+  <link rel="stylesheet" href="style.css?v=mentor-workspace-2">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="SkillGapper home">
+        <span class="brand-mark">S</span>
+        <span>Skill<span class="brand-accent">Gapper</span></span>
+      </a>
+      <div class="topbar-actions">
+        <nav class="auth-navigation" id="guestNavigation" aria-label="Account">
+          <a href="login.html" class="auth-nav-link">Login</a>
+          <a href="signup.html" class="auth-nav-button">Sign Up</a>
+        </nav>
+
+        <div class="top-actions" id="authenticatedActions" hidden>
+          <div class="notification-container">
+            <button class="icon-button" id="notificationBtn" type="button" aria-label="Notifications" title="Notifications" aria-haspopup="true" aria-expanded="false" aria-controls="notificationPanel">
+              <svg class="notification-bell-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" /></svg>
+              <span class="notification-badge" id="notificationUnreadBadge" aria-label="Unread notifications" hidden></span>
+            </button>
+            <section class="notification-panel" id="notificationPanel" aria-label="Notifications" hidden>
+              <header class="notification-panel-header">
+                <div class="notification-panel-heading">
+                  <h2>Notifications</h2>
+                  <span class="notification-panel-count" id="notificationPanelCount" hidden></span>
+                </div>
+                <button class="notification-mark-all" id="markAllNotificationsReadBtn" type="button" disabled>Mark all as read</button>
+              </header>
+              <p class="notification-status" id="notificationStatus" role="status" aria-live="polite" hidden></p>
+              <div class="notification-list" id="notificationList"></div>
+              <div class="notification-empty" id="notificationEmptyState" hidden>
+                <span class="notification-empty-icon" aria-hidden="true">✓</span>
+                <strong>You're all caught up!</strong>
+                <p>Your learning updates will appear here.</p>
+              </div>
+            </section>
+          </div>
+          <div class="profile-menu-container">
+            <button class="avatar-button" id="topProfileBtn" type="button" aria-label="Open profile menu" aria-haspopup="true" aria-expanded="false" aria-controls="profileMenu">P</button>
+            <section class="profile-menu" id="profileMenu" aria-label="Profile menu" hidden>
+              <div class="profile-menu-identity">
+                <strong id="profileMenuName"></strong>
+                <span id="profileMenuEmail"></span>
+              </div>
+              <div class="profile-menu-links">
+                <button type="button" class="profile-menu-item" data-profile-action="profile">My Profile</button>
+                <button type="button" class="profile-menu-item" data-profile-action="progress">My Progress</button>
+              </div>
+              <div class="profile-menu-divider" role="separator"></div>
+              <button type="button" class="profile-menu-item profile-menu-logout" id="profileLogoutBtn">Logout</button>
+            </section>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- HOME VIEW -->
+      <section class="page-view active" id="homeView" aria-labelledby="welcomeTitle">
+        <div class="welcome-row">
+          <div>
+            <p class="eyebrow">YOUR PERSONAL SKILL SPACE</p>
+            <h1 id="welcomeTitle">Hey there, learner! <span class="wave">✦</span></h1>
+            <p class="subheading">Small steps today. Stronger skills tomorrow.</p>
+          </div>
+          <button class="primary-button" id="startAssessmentBtn">Start assessment <span aria-hidden="true">→</span></button>
+        </div>
+
+        <section class="hero-card">
+          <div class="hero-copy">
+            <span class="pill pill-light">YOUR POTENTIAL. YOUR FUTURE.</span>
+            <h2>Build Skills<br><span>Unlock Your Potential</span></h2>
+            <p>Discover your strengths, identify your skill gaps, and follow a personalized learning roadmap designed to bring you closer to your dream career.</p>
+            <button class="hero-button" id="exploreSkillsBtn">Discover My Skill Gaps <span aria-hidden="true">→</span></button>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+            <div class="floating-tile tile-code">&lt;/&gt;</div>
+            <div class="floating-tile tile-star">✦</div>
+            <div class="student-illustration">
+              <div class="student-hair"></div><div class="student-head"><span class="eye eye-left"></span><span class="eye eye-right"></span><span class="smile"></span></div>
+              <div class="student-neck"></div><div class="student-body"><span class="hoodie-line"></span></div>
+              <div class="laptop"><div class="laptop-logo">S</div></div>
+            </div>
+            <div class="art-books"><span></span><span></span><span></span></div>
+          </div>
+        </section>
+
+        <div class="section-title-row">
+          <div><p class="eyebrow">YOUR JOURNEY AT A GLANCE</p><h2>Your Growth Journey</h2></div>
+          <button class="text-button" data-go="skills">View details <span aria-hidden="true">→</span></button>
+        </div>
+
+        <section class="stats-grid" aria-label="Skill progress summary">
+          <article class="stat-card progress-card">
+            <div class="progress-ring" id="learningProgressRing" aria-label="0 percent overall progress"><span id="learningProgressPercent">0<small>%</small></span></div>
+            <div><p class="stat-label">Your learning progress</p><h3 id="learningProgressHeadline">Every Step Counts!</h3><p class="muted" id="learningProgressMessage">Start a roadmap task to track your learning.</p></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon blue-icon">▤</div><p class="stat-number" id="learningInProgressCount">00</p><p class="stat-label">Tasks in Progress</p><div class="mini-bar"><span id="learningInProgressBar" style="width:0%"></span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon green-icon">✓</div><p class="stat-number" id="learningCompletedCount">00</p><p class="stat-label">Tasks Completed</p><div class="mini-bar green-bar"><span id="learningCompletedBar" style="width:0%"></span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon orange-icon">↗</div><p class="stat-number" id="learningTotalCount">00</p><p class="stat-label">Learning Tasks</p><div class="mini-bar orange-bar"><span id="learningTotalBar" style="width:0%"></span></div>
+          </article>
+        </section>
+
+        <section class="motivation-card" aria-label="Learning motivation">
+          <span class="motivation-icon" aria-hidden="true">✦</span>
+          <div>
+            <p class="eyebrow">KEEP MOVING FORWARD</p>
+            <h3>Every expert started as a beginner.</h3>
+            <p>Identify your gaps, build your skills, and take one step closer to your dream career every day.</p>
+          </div>
+        </section>
+        <p class="placement-entry"><a class="auth-nav-link" href="placement-prediction.html">Explore Placement Prediction <span aria-hidden="true">→</span></a></p>
+      </section>
+
+      <!-- LEARNING PROGRESS VIEW -->
+      <section class="page-view" id="progressView" aria-labelledby="progressTitle">
+        <div class="page-heading"><p class="eyebrow">YOUR LEARNING PLAN</p><h1 id="progressTitle">Learning progress</h1><p class="subheading">Turn your personalized roadmap into small, trackable steps.</p></div>
+        <p class="assessment-message" id="learningProgressStatus" role="status" aria-live="polite" hidden></p>
+        <section class="learning-progress-overview">
+          <div class="progress-ring" id="learningOverviewRing" aria-label="0 percent overall progress"><span id="learningOverviewPercent">0<small>%</small></span></div>
+          <div><p class="stat-label">Overall completion</p><h2 id="learningOverviewHeadline">No tasks yet</h2><p class="muted" id="learningOverviewMessage">Complete an assessment to generate your learning roadmap.</p></div>
+        </section>
+        <section class="learning-progress-summary" aria-label="Learning task summary" id="learningProgressSummary"></section>
+        <section class="learning-progress-section">
+          <div class="section-title-row"><div><p class="eyebrow">SKILL PROGRESS</p><h2>Progress by skill</h2></div></div>
+          <div class="learning-skill-list" id="learningProgressSkills"></div>
+        </section>
+        <section class="learning-progress-section">
+          <div class="section-title-row"><div><p class="eyebrow">YOUR ROADMAP TASKS</p><h2>Learning tasks</h2></div><span class="assessment-progress" id="learningTaskCount">0 tasks</span></div>
+          <div class="learning-task-list" id="learningTasksList"></div>
+        </section>
+      </section>
+
+      <!-- POSTS VIEW -->
+      <section class="page-view" id="postsView" aria-labelledby="postsTitle">
+        <div class="page-heading"><p class="eyebrow">LEARN TOGETHER</p><h1 id="postsTitle">Community posts</h1><p class="subheading">Share progress, ask questions, and learn from other students.</p></div>
+        <div class="community-section-heading"><span class="community-section-mark" aria-hidden="true">✦</span><div><p class="eyebrow">STUDENT COMMUNITY</p><h2>Conversations from learners</h2></div></div>
+        <form class="compose-card" id="postForm">
+          <div class="post-composer-avatar" id="postComposerAvatar" aria-hidden="true">S</div>
+          <div class="post-composer-main">
+            <label for="postInput">What's on your learning mind?</label>
+            <textarea id="postInput" rows="3" maxlength="500" placeholder="Share a learning win, ask a question, or start a discussion..." required></textarea>
+            <div class="post-composer-footer">
+              <span class="post-composer-hint">Be kind. Keep learning.</span>
+              <div class="post-composer-actions"><span class="post-character-count" id="postCharacterCount" aria-live="polite">0 / 500</span><button class="primary-button" id="publishPostBtn" type="submit" disabled>Publish post <span aria-hidden="true">↗</span></button></div>
+            </div>
+          </div>
+        </form>
+        <p class="post-status" id="postStatus" role="status" aria-live="polite" hidden></p>
+        <div class="post-list" id="postList" aria-live="polite"></div>
+        <div class="post-empty-state" id="postEmptyState" hidden>
+          <span class="post-empty-icon" aria-hidden="true">✦</span>
+          <h2>Start the conversation</h2>
+          <p>There are no community posts yet. Share what you're learning to get things started.</p>
+        </div>
+        <dialog class="post-delete-dialog" id="deletePostDialog" aria-labelledby="deletePostTitle" aria-describedby="deletePostDescription">
+          <div class="post-delete-dialog-content">
+            <span class="post-delete-icon" aria-hidden="true">!</span>
+            <h2 id="deletePostTitle">Delete this post?</h2>
+            <p id="deletePostDescription">Are you sure you want to delete this post? This action cannot be undone.</p>
+            <p class="post-delete-error" id="deletePostError" role="alert" hidden></p>
+            <div class="post-delete-actions"><button class="outline-button" id="cancelDeletePostBtn" type="button">Cancel</button><button class="post-delete-confirm" id="confirmDeletePostBtn" type="button">Delete Post</button></div>
+          </div>
+        </dialog>
+      </section>
+
+      <!-- PROFILE VIEW -->
+      <section class="page-view" id="profileView" aria-labelledby="profileTitle">
+        <div class="page-heading"><p class="eyebrow">YOUR SPACE</p><h1 id="profileTitle">My profile</h1><p class="subheading">Manage your SkillGapper account details.</p></div>
+        <p class="profile-status" id="profileStatus" role="status" aria-live="polite">Loading your profile…</p>
+        <div id="profileContent" hidden>
+          <section class="profile-card">
+            <div class="profile-cover"></div>
+            <div class="profile-main">
+              <div class="large-avatar" id="profileAvatar" aria-hidden="true"></div>
+              <div class="profile-name">
+                <h2 id="displayName"></h2>
+                <p class="muted" id="profileEmail"></p>
+                <span class="profile-badge">SkillGapper member</span>
+              </div>
+              <button class="outline-button" id="editProfileBtn" type="button">Edit profile</button>
+            </div>
+          </section>
+          <section class="profile-form-card" id="profileFormCard" hidden>
+            <h2>Edit your profile</h2>
+            <p class="muted">Update the name displayed on your account.</p>
+            <form id="profileForm">
+              <label for="nameInput">Full name</label>
+              <input id="nameInput" maxlength="100" autocomplete="name" required>
+              <p class="profile-form-error" id="profileFormError" role="alert" hidden></p>
+              <div class="profile-form-actions">
+                <button class="primary-button" id="saveProfileBtn" type="submit">Save Changes</button>
+                <button class="outline-button" id="cancelProfileBtn" type="button">Cancel</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      </section>
+
+      <!-- SKILLS GAP VIEW -->
+      <section class="page-view" id="skillsView" aria-labelledby="skillsTitle">
+        <div class="page-heading"><p class="eyebrow">FIND YOUR NEXT GROWTH AREA</p><h1 id="skillsTitle">My skill gap</h1><p class="subheading">Compare your current skills with the skills your target role needs.</p></div>
+
+        <p class="assessment-message" id="assessmentStatus" role="status" aria-live="polite" hidden></p>
+
+        <section class="assessment-panel target-role-card" id="assessmentSetupPanel">
+          <div class="assessment-panel-copy">
+            <p class="eyebrow">YOUR TARGET ROLE</p>
+            <h2>Choose a career goal</h2>
+            <p class="muted">We will compare your self-assessment and quiz results with the skills this role requires.</p>
+          </div>
+          <div class="assessment-setup-controls">
+            <label for="careerSelect">Career goal</label>
+            <select id="careerSelect" disabled>
+              <option value="">Loading career goals...</option>
+            </select>
+            <p class="muted" id="careerDescription">Select a career to see its required skills.</p>
+            <div class="assessment-skill-preview" id="careerSkillsPreview"></div>
+            <button class="primary-button" id="startCareerBtn" type="button" disabled>Start self-assessment <span aria-hidden="true">→</span></button>
+          </div>
+        </section>
+
+        <section class="assessment-panel" id="selfAssessmentPanel" hidden>
+          <div class="assessment-panel-heading">
+            <div>
+              <p class="eyebrow">STEP 1 OF 2</p>
+              <h2>Rate your current skills</h2>
+            </div>
+            <span class="assessment-progress" id="selfAssessmentProgress">0 of 0 rated</span>
+          </div>
+          <div class="assessment-level-guide">
+            <strong>What do the levels mean?</strong>
+            <span>1 New to it</span>
+            <span>2 Basic exposure</span>
+            <span>3 Can use with guidance</span>
+            <span>4 Comfortable</span>
+            <span>5 Can apply independently</span>
+          </div>
+          <div class="assessment-skill-list" id="selfRatingList"></div>
+          <p class="assessment-inline-message" id="selfAssessmentError" role="alert" hidden></p>
+          <button class="primary-button" id="submitSelfAssessmentBtn" type="button">Continue to quiz <span aria-hidden="true">→</span></button>
+        </section>
+
+        <section class="assessment-panel" id="quizPanel" hidden>
+          <div class="assessment-panel-heading">
+           <div>
+             <p class="eyebrow">STEP 2 OF 2</p>
+             <h2>Knowledge quiz</h2>
+           </div>
+           <span class="assessment-progress" id="quizProgress">Question 0 of 0</span>
+          </div>
+          <div class="quiz-progress-track" aria-hidden="true"><span id="quizProgressBar"></span></div>
+          <p class="quiz-answer-status" id="quizAnswerStatus" aria-live="polite"></p>
+          <p class="assessment-note">This is an initial knowledge assessment, not a professional certification. Correct answers are evaluated securely after submission.</p>
+          <div class="quiz-question-meta"><span id="quizSkill"></span></div>
+          <h3 class="quiz-question" id="quizQuestion">Loading question...</h3>
+          <div class="quiz-options" id="quizOptions"></div>
+          <div class="quiz-question-navigator" id="quizQuestionNavigator" aria-label="Quiz questions"></div>
+          <p class="assessment-inline-message" id="quizError" role="alert" hidden></p>
+          <div class="assessment-actions">
+            <button class="outline-button" id="quizPreviousBtn" type="button">Previous</button>
+            <div>
+              <button class="outline-button" id="quizNextBtn" type="button">Next</button>
+              <button class="primary-button" id="quizSubmitBtn" type="button" hidden>Submit quiz <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </section>
+
+        <section class="assessment-panel" id="assessmentResultsPanel" hidden>
+          <div class="assessment-panel-heading">
+            <div>
+              <p class="eyebrow">YOUR PERSONALIZED RESULTS</p>
+              <h2 id="assessmentResultsTitle">Skill-gap analysis</h2>
+            </div>
+            <button class="outline-button" id="startNewAssessmentBtn" type="button">Start new</button>
+          </div>
+          <p class="assessment-note" id="assessmentResultsNote"></p>
+          <div class="assessment-summary-grid" id="assessmentSummary"></div>
+          <div class="assessment-result-section">
+            <p class="eyebrow">SKILL BREAKDOWN</p>
+            <div class="assessment-results-list" id="assessmentResultsSkills"></div>
+          </div>
+          <div class="assessment-result-columns">
+            <section class="assessment-result-section">
+              <p class="eyebrow">STRENGTHS</p>
+              <div class="assessment-tag-list" id="assessmentStrengths"></div>
+            </section>
+            <section class="assessment-result-section">
+              <p class="eyebrow">IMPROVEMENT PRIORITIES</p>
+              <div class="assessment-priority-list" id="assessmentPriorities"></div>
+            </section>
+          </div>
+          <section class="assessment-result-section roadmap-result-section">
+            <p class="eyebrow">YOUR LEARNING ROADMAP</p>
+            <div class="assessment-roadmap-list" id="assessmentRoadmap"></div>
+          </section>
+          <section class="assessment-rules">
+            <p class="eyebrow">HOW THIS WAS CALCULATED</p>
+            <ul id="assessmentScoringRules"></ul>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <button class="bottom-nav-item active" data-view="home" aria-current="page"><span class="nav-icon">⌂</span><span>Home</span></button>
+      <button class="bottom-nav-item" data-view="posts"><span class="nav-icon">▤</span><span>Posts</span></button>
+      <button class="bottom-nav-item" data-view="profile"><span class="nav-icon">♙</span><span>Profile</span></button>
+      <button class="bottom-nav-item" data-view="progress"><span class="nav-icon">✓</span><span>Progress</span></button>
+      <button class="bottom-nav-item" data-view="skills"><span class="nav-icon">▥</span><span>Skills Gap</span></button>
+    </nav>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <aside class="ai-mentor-widget" id="aiMentorWidget" hidden aria-label="SkillGapper AI Mentor">
+    <div class="ai-mentor-workspace">
+      <aside class="ai-mentor-sidebar" id="aiMentorSidebar" aria-label="AI Mentor navigation">
+        <div class="ai-mentor-sidebar-brand">
+          <span class="ai-mentor-sidebar-mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48" focusable="false">
+              <path d="M24 11V6m0 0-3 3m3-3 3 3" />
+              <rect x="8" y="12" width="32" height="28" rx="10" />
+              <circle cx="18" cy="25" r="3" />
+              <circle cx="30" cy="25" r="3" />
+              <path d="M17 32c4 3 10 3 14 0" />
+            </svg>
+          </span>
+          <div>
+            <strong>SkillGapper</strong>
+            <span>AI Mentor Workspace</span>
+          </div>
+        </div>
+        <button class="ai-mentor-new-chat" id="aiMentorNewChat" type="button"><span aria-hidden="true">+</span> New Chat</button>
+        <section class="ai-mentor-history-panel" id="aiMentorHistoryPanel" tabindex="-1" aria-label="Recent conversations">
+          <div class="ai-mentor-history-header">
+            <div>
+              <strong class="ai-mentor-history-label">Chats</strong>
+              <span id="aiMentorHistorySummary">No conversations yet. Start a new chat.</span>
+            </div>
+            <button class="ai-mentor-history-clear danger" id="aiMentorClearHistory" type="button">Clear history</button>
+          </div>
+          <label class="ai-mentor-history-search">
+            <span class="ai-mentor-sr-only">Search conversations</span>
+            <input id="aiMentorHistorySearch" type="search" placeholder="Search conversations" autocomplete="off">
+          </label>
+          <div class="ai-mentor-conversation-list" id="aiMentorConversationList" role="list"></div>
+          <p class="ai-mentor-history-empty" id="aiMentorHistoryEmpty" hidden>No conversations match your search.</p>
+        </section>
+        <nav class="ai-mentor-sidebar-actions" aria-label="Mentor tools">
+          <p class="ai-mentor-sidebar-label">QUICK ACCESS</p>
+          <button type="button" data-ai-mentor-mode="skill_analysis" data-ai-mentor-prompt="Analyze my current skill gaps using only my verified SkillGapper assessment. Classify the skills, explain why the priorities matter for my career, and give me practice exercises."><span class="ai-mentor-sidebar-icon action-skill" aria-hidden="true">⌕</span><span>Skill Analysis</span></button>
+          <button type="button" data-ai-mentor-mode="roadmap" data-ai-mentor-prompt="Create an AI-generated daily and weekly learning roadmap for my target career and study time. Include topics, exercises, mini-projects, and the next best task based on saved progress."><span class="ai-mentor-sidebar-icon action-roadmap" aria-hidden="true">▣</span><span>Learning Roadmap</span></button>
+          <button type="button" data-ai-mentor-mode="mock_interview" data-ai-mentor-prompt="Start a mock interview for my selected career. Ask one question at a time, wait for my answer, then score it with strengths, weaknesses, and an improved example answer."><span class="ai-mentor-sidebar-icon action-interview" aria-hidden="true">◎</span><span>Mock Interview</span></button>
+          <button type="button" data-ai-mentor-mode="coding" data-ai-mentor-prompt="Give me a coding practice question at my selected level and language. Give a hint first, wait for my attempt, and only reveal a solution when I ask."><span class="ai-mentor-sidebar-icon action-coding" aria-hidden="true">&lt;/&gt;</span><span>Coding Practice</span></button>
+          <button type="button" data-ai-mentor-mode="resume_review" data-ai-mentor-prompt="Help me review or improve my resume text. Suggest truthful project descriptions, resume bullets, and a concise interview introduction without inventing experience."><span class="ai-mentor-sidebar-icon action-resume" aria-hidden="true">▤</span><span>Resume Review</span></button>
+          <button type="button" data-ai-mentor-mode="placement_prep" data-ai-mentor-prompt="Create a practical weekly placement-preparation checklist with aptitude, HR, project, and interview practice. Do not invent placement statistics or guarantee outcomes."><span class="ai-mentor-sidebar-icon action-placement" aria-hidden="true">↗</span><span>Placement Prep</span></button>
+        </nav>
+        <button class="ai-mentor-back-dashboard" id="aiMentorBackDashboard" type="button"><span aria-hidden="true">←</span> Back to Dashboard</button>
+      </aside>
+      <main class="ai-mentor-main">
+        <header class="ai-mentor-header">
+          <button class="ai-mentor-sidebar-toggle" id="aiMentorSidebarToggle" type="button" aria-label="Open mentor sidebar" aria-expanded="false" aria-controls="aiMentorSidebar">☰</button>
+          <div class="ai-mentor-identity">
+            <span class="ai-mentor-mark" aria-hidden="true">
+              <svg viewBox="0 0 48 48" focusable="false">
+                <path class="ai-mentor-mark-antenna" d="M24 11V6m0 0-3 3m3-3 3 3" />
+                <rect x="8" y="12" width="32" height="28" rx="10" />
+                <circle cx="18" cy="25" r="3" />
+                <circle cx="30" cy="25" r="3" />
+                <path d="M17 32c4 3 10 3 14 0" />
+              </svg>
+            </span>
+            <div>
+              <strong>SkillGapper AI Mentor</strong>
+              <span class="ai-mentor-presence"><span class="ai-mentor-presence-dot" aria-hidden="true"></span>Local AI · Ollama</span>
+            </div>
+          </div>
+          <div class="ai-mentor-header-actions">
+            <button class="ai-mentor-icon-button" id="aiMentorHistory" type="button" aria-label="Focus recent conversations" title="Recent conversations" aria-expanded="false" aria-controls="aiMentorHistoryPanel"><span aria-hidden="true">◷</span></button>
+            <button class="ai-mentor-icon-button" id="aiMentorSettingsToggle" type="button" aria-label="Focus mentor settings" title="Settings" aria-expanded="false" aria-controls="aiMentorSettings"><span aria-hidden="true">⚙</span></button>
+            <button class="ai-mentor-icon-button ai-mentor-stop-button" id="aiMentorStop" type="button" aria-label="Stop generating" title="Stop generating" hidden>■</button>
+            <button class="ai-mentor-icon-button" id="aiMentorClose" type="button" aria-label="Close AI Mentor" title="Close workspace">×</button>
+          </div>
+        </header>
+        <div class="ai-mentor-settings" id="aiMentorSettings" aria-label="Mentor preferences">
+        <label title="Use a verified assessment career when available">
+          <span class="ai-mentor-setting-heading"><span class="ai-mentor-setting-icon" aria-hidden="true">▣</span>Career</span>
+          <select id="aiMentorCareerSelect" aria-label="Target career">
+            <option value="">Use my assessment career</option>
+          </select>
+        </label>
+        <label title="Choose how much time you can study each day">
+          <span class="ai-mentor-setting-heading"><span class="ai-mentor-setting-icon" aria-hidden="true">◷</span>Daily time</span>
+          <select id="aiMentorStudyTime" aria-label="Daily study time">
+            <option value="15">15 min</option>
+            <option value="30" selected>30 min</option>
+            <option value="45">45 min</option>
+            <option value="60">1 hour</option>
+            <option value="90">90 min</option>
+            <option value="120">2 hours</option>
+          </select>
+        </label>
+        <label title="Choose how the mentor should respond">
+          <span class="ai-mentor-setting-heading"><span class="ai-mentor-setting-icon" aria-hidden="true">▱</span>Mode</span>
+          <select id="aiMentorModeSelect" aria-label="Mentor mode">
+            <option value="general">Career guidance</option>
+            <option value="skill_analysis">Skill analysis</option>
+            <option value="roadmap">Learning roadmap</option>
+            <option value="technical_interview">Technical interview</option>
+            <option value="hr_interview">HR interview</option>
+            <option value="mock_interview">Mock interview</option>
+            <option value="coding">Coding practice</option>
+            <option value="resume_review">Resume review</option>
+            <option value="placement_prep">Placement prep</option>
+          </select>
+        </label>
+        <label title="Select a coding language when using Coding Practice">
+          <span class="ai-mentor-setting-heading"><span class="ai-mentor-setting-icon" aria-hidden="true">&lt;/&gt;</span>Language</span>
+          <select id="aiMentorLanguageSelect" aria-label="Coding language">
+            <option value="python" selected>Python</option>
+            <option value="java">Java</option>
+            <option value="javascript">JavaScript</option>
+            <option value="sql">SQL</option>
+          </select>
+        </label>
+        <label title="Select the challenge level for coding practice">
+          <span class="ai-mentor-setting-heading"><span class="ai-mentor-setting-icon" aria-hidden="true">▥</span>Level</span>
+          <select id="aiMentorDifficultySelect" aria-label="Coding difficulty">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate" selected>Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </label>
+        <label title="Focus the mentor on one assessment skill">
+          <span class="ai-mentor-setting-heading"><span class="ai-mentor-setting-icon" aria-hidden="true">◎</span>Target skill</span>
+          <select id="aiMentorSkillSelect" aria-label="Target skill">
+            <option value="">Choose a skill</option>
+          </select>
+        </label>
+        </div>
+      <div class="ai-mentor-messages" id="aiMentorMessages" role="log" aria-live="polite" aria-label="AI Mentor conversation"></div>
+      <div class="ai-mentor-status-row" hidden>
+        <p class="ai-mentor-status" id="aiMentorStatus" role="status" aria-live="polite" hidden></p>
+        <button class="ai-mentor-retry" id="aiMentorRetry" type="button" hidden>Retry</button>
+      </div>
+      <div class="ai-mentor-footer" id="aiMentorAttachmentZone">
+        <div class="ai-mentor-attachment-preview" id="aiMentorAttachmentPreview" hidden></div>
+        <p class="ai-mentor-attachment-status" id="aiMentorAttachmentStatus" role="status" aria-live="polite" hidden></p>
+        <form class="ai-mentor-composer" id="aiMentorForm">
+          <label class="ai-mentor-sr-only" for="aiMentorInput">Message AI Mentor</label>
+          <input id="aiMentorFileInput" type="file" accept=".png,.jpg,.jpeg,.webp,.pdf,.txt,.py,.java,.js,.html,.css,.json,.csv,.md" multiple hidden>
+          <button class="ai-mentor-attach" id="aiMentorAttach" type="button" aria-label="Attach files" title="Attach up to 4 files, 4 MB each">⌕</button>
+          <textarea id="aiMentorInput" rows="1" maxlength="6000" placeholder="Ask about skills, roadmaps, interviews, code, or resumes..." autocomplete="off" aria-describedby="aiMentorFootnote"></textarea>
+          <button class="ai-mentor-send" id="aiMentorSend" type="submit" aria-label="Send message">↑</button>
+        </form>
+        <div class="ai-mentor-suggested-prompts" aria-label="Suggested prompts">
+          <button type="button" data-ai-mentor-mode="coding" data-ai-mentor-prompt="Explain this code line by line and include complexity when appropriate.">Explain this code</button>
+          <button type="button" data-ai-mentor-mode="coding" data-ai-mentor-prompt="Give me a similar coding exercise with a hint first.">Give a similar exercise</button>
+          <button type="button" data-ai-mentor-mode="coding" data-ai-mentor-prompt="Explain try-except in Python with a small safe example.">What is try-except?</button>
+          <button type="button" data-ai-mentor-mode="mock_interview" data-ai-mentor-prompt="Give me practice interview questions for my selected career, one at a time.">Give practice questions</button>
+        </div>
+        <p class="ai-mentor-footnote" id="aiMentorFootnote">AI recommendations stay in this browser session. Saved checklist progress is tracked separately.</p>
+        <p class="ai-mentor-score" id="aiMentorScore" hidden aria-live="polite"></p>
+      </div>
+      </main>
+    </div>
+    <div class="ai-mentor-dialog-overlay" id="aiMentorDialogOverlay" hidden></div>
+
+    <div class="ai-mentor-dialog" id="aiMentorRenameDialog" role="dialog" aria-modal="true" aria-labelledby="aiMentorRenameDialogTitle" hidden>
+      <div class="ai-mentor-dialog-header">
+        <h3 id="aiMentorRenameDialogTitle">Rename conversation</h3>
+      </div>
+      <input type="text" id="aiMentorRenameInput" class="ai-mentor-dialog-input" placeholder="Conversation title" maxlength="100">
+      <div class="ai-mentor-dialog-actions">
+        <button type="button" class="ai-mentor-dialog-btn ai-mentor-dialog-btn-cancel" id="aiMentorRenameCancel">Cancel</button>
+        <button type="button" class="ai-mentor-dialog-btn ai-mentor-dialog-btn-save" id="aiMentorRenameSave">Save</button>
+      </div>
+    </div>
+
+    <div class="ai-mentor-dialog" id="aiMentorDeleteDialog" role="dialog" aria-modal="true" aria-labelledby="aiMentorDeleteDialogTitle" hidden>
+      <div class="ai-mentor-dialog-header">
+        <h3 id="aiMentorDeleteDialogTitle">Delete conversation</h3>
+      </div>
+      <p class="ai-mentor-dialog-message" id="aiMentorDeleteMessage">Are you sure you want to delete this conversation?</p>
+      <div class="ai-mentor-dialog-actions">
+        <button type="button" class="ai-mentor-dialog-btn ai-mentor-dialog-btn-cancel" id="aiMentorDeleteCancel">Cancel</button>
+        <button type="button" class="ai-mentor-dialog-btn ai-mentor-dialog-btn-delete" id="aiMentorDeleteConfirm">Delete</button>
+      </div>
+    </div>
+
+  </aside>
+  <button class="ai-mentor-launcher" id="aiMentorLauncher" type="button" hidden aria-expanded="false" aria-controls="aiMentorWidget">
+    <span class="ai-mentor-launcher-mark" aria-hidden="true">✦</span>
+    <span>AI Mentor</span>
+  </button>
+  <script src="script.js?v=mentor-workspace-2"></script>
+</body>
+</html>

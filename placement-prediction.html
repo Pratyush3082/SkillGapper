@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Placement prediction estimate for SkillGapper members.">
+  <title>Placement Prediction | SkillGapper</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="placement-prediction.css">
+</head>
+<body>
+  <div class="app-shell placement-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="SkillGapper dashboard">
+        <span class="brand-mark">S</span>
+        <span>Skill<span class="brand-accent">Gapper</span></span>
+      </a>
+      <a class="auth-nav-link" href="index.html">← Back to dashboard</a>
+    </header>
+
+    <main class="main-content placement-main">
+      <div class="page-heading">
+        <p class="eyebrow">CAREER OUTLOOK</p>
+        <h1>Placement Prediction</h1>
+        <p class="subheading">Enter your details to request an estimate from the placement model.</p>
+      </div>
+
+      <p class="placement-status" id="placementPageStatus" role="status" aria-live="polite">Checking your session…</p>
+
+      <section class="placement-panel" id="placementPanel" hidden>
+        <div class="placement-disclaimer" role="note">
+          <strong>About this estimate</strong>
+          <p>Academic prototype only. Placement predictions are estimates, not guarantees. The existing model has passed compatibility checks but is not independently verified for real-world placement outcomes. Numeric range limits have not yet been verified, so this form checks value types and format only. Submitted values are not stored.</p>
+        </div>
+
+        <div class="placement-info-banner">
+          <strong>How It Works</strong>
+          <p>
+            Enter your academic details and skills to receive an AI-generated
+            placement prediction. Results are estimates, not guarantees.
+          </p>
+        </div>
+
+        <form class="placement-form" id="placementForm" novalidate>
+          <div class="placement-form-grid">
+            <div class="placement-field"><label for="placementAge">Age</label><input id="placementAge" name="age" type="number" step="1" required inputmode="numeric"></div>
+            <div class="placement-field"><label for="placementCgpa">CGPA</label><input id="placementCgpa" name="cgpa" type="number" step="any" required inputmode="decimal"></div>
+            <div class="placement-field"><label for="placementBacklogs">Backlogs</label><input id="placementBacklogs" name="backlogs" type="number" step="1" required inputmode="numeric"></div>
+            <div class="placement-field"><label for="placementInternships">Internships</label><input id="placementInternships" name="internships" type="number" step="1" required inputmode="numeric"></div>
+            <div class="placement-field"><label for="placementCertifications">Certifications</label><input id="placementCertifications" name="certifications" type="number" step="1" required inputmode="numeric"></div>
+            <div class="placement-field"><label for="placementCodingSkills">Coding skills</label><input id="placementCodingSkills" name="coding_skills" type="number" step="1" required inputmode="numeric"></div>
+            <div class="placement-field"><label for="placementCommunicationSkills">Communication skills</label><input id="placementCommunicationSkills" name="communication_skills" type="number" step="1" required inputmode="numeric"></div>
+            <div class="placement-field"><label for="placementAptitudeScore">Aptitude score</label><input id="placementAptitudeScore" name="aptitude_score" type="number" step="1" required inputmode="numeric"></div>
+            <div class="placement-field"><label for="placementProjects">Projects</label><input id="placementProjects" name="projects" type="number" step="1" required inputmode="numeric"></div>
+            <div class="placement-field"><label for="placementDegree">Degree</label><select id="placementDegree" name="degree" required><option value="">Choose a degree</option><option value="BCA">BCA</option><option value="BE">BE</option><option value="BSc">BSc</option><option value="BTech">BTech</option></select></div>
+            <div class="placement-field"><label for="placementBranch">Branch</label><select id="placementBranch" name="branch" required><option value="">Choose a branch</option><option value="AI">AI</option><option value="CS">CS</option><option value="DS">DS</option><option value="Electrical">Electrical</option><option value="IT">IT</option><option value="Mechanical">Mechanical</option></select></div>
+          </div>
+          <div class="placement-result" id="placementResult" role="status" aria-live="polite" hidden>
+            <span class="placement-result-kicker">Placement Prediction</span>
+            <div class="placement-result-value">
+              <span class="placement-result-icon" id="placementResultIcon" aria-hidden="true"></span>
+              <span id="placementResultLabel"></span>
+            </div>
+            <p class="placement-result-note">Academic demo estimate &mdash; not a placement guarantee.</p>
+          </div>
+          <p class="placement-form-message" id="placementFormMessage" role="status" aria-live="polite" hidden></p>
+          <div class="placement-form-footer">
+            <span class="muted">All fields are required. No numeric ranges are assumed.</span>
+            <button class="primary-button" id="placementSubmitBtn" type="submit">Request estimate</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+  <script src="placement-prediction.js"></script>
+</body>
+</html>

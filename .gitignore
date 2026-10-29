@@ -1,0 +1,101 @@
+# =============================================================================
+# SkillGapper .gitignore
+# =============================================================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+backend/.venv/
+backend/venv/
+
+# --- Python testing ---
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+
+# --- Python distributions ---
+*.egg-info/
+dist/
+build/
+*.egg
+*.whl
+
+# --- Virtual environments and local env files ---
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+secrets.env
+
+# --- Flask/Backend ---
+instance/
+.webassets-cache
+backend/database.db
+*.sqlite
+*.sqlite3
+*.db
+
+# --- Node.js / Frontend ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# --- IDEs ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# --- Backups (development scratch files) ---
+*.bak
+*.backup
+*.orig
+*.rej
+
+# --- Logs ---
+*.log
+logs/
+npm-log.txt
+
+# --- Temporary / scratch files ---
+*.tmp
+*.temp
+tempCodeRunnerFile.py
+
+# --- ML / Data artifacts (training data & experimental outputs) ---
+# Trained model binaries are project-owned and included intentionally.
+# See README.md for model setup details.
+ml_model/jobpredictor/dataset/*.csv
+ml_model/jobpredictor/experimental_output/
+ml_model/jobpredictor/experimental_requirements.txt
+
+# --- Project-specific local data (user databases, recovery artifacts) ---
+database-rebuild-20261023/
+database-recovery-20261023/
+
+# --- OS generated ---
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# --- End of .gitignore ======================================================

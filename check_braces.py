@@ -1,0 +1,20 @@
+with open(r'C:\Users\prasi\Desktop\Project\script.js', 'r') as f:
+    content = f.read()
+
+open_brace = content.count('{')
+close_brace = content.count('}')
+open_paren = content.count('(')
+close_paren = content.count(')')
+open_bracket = content.count('[')
+close_bracket = content.count(']')
+
+print('Open brace   { :', open_brace)
+print('Close brace  } :', close_brace)
+print('Open paren   ( :', open_paren)
+print('Close paren  ) :', close_paren)
+print('Open bracket [ :', open_bracket)
+print('Close bracket] :', close_bracket)
+print()
+print('Brace diff (open - close):', open_brace - close_brace)
+print('Paren diff (open - close):', open_paren - close_paren)
+print('Bracket diff (open - close):', open_bracket - close_bracket)

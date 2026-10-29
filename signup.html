@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | SkillGapper</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+
+    <main class="auth-container">
+
+        <a href="index.html" class="brand">
+            <span class="brand-icon">S</span>
+            Skill<span>Gapper</span>
+        </a>
+
+        <section class="auth-card">
+
+            <div class="auth-heading">
+                <h1>Create your account</h1>
+                <p>Start building skills for your future.</p>
+            </div>
+
+            <form id="signupForm">
+
+                <label for="signupName">Full name</label>
+                <input
+                    type="text"
+                    id="signupName"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                    maxlength="80"
+                    required
+                >
+
+                <label for="signupEmail">Email address</label>
+                <input
+                    type="email"
+                    id="signupEmail"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required
+                >
+
+                <label for="signupPassword">Create password</label>
+
+                <div class="password-field">
+                    <input
+                        type="password"
+                        id="signupPassword"
+                        placeholder="At least 8 characters"
+                        minlength="8"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        data-target="signupPassword">
+                        Show
+                    </button>
+                </div>
+
+                <label for="confirmPassword">Confirm password</label>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Enter password again"
+                    autocomplete="new-password"
+                    required
+                >
+
+                <label class="terms-option">
+                    <input type="checkbox" id="acceptTerms" required>
+                    I agree to the terms and conditions.
+                </label>
+
+                <button type="submit" class="auth-button">
+                    Create Account →
+                </button>
+
+                <p id="signupMessage" class="form-message"
+                   role="status" aria-live="polite"></p>
+
+            </form>
+
+            <p class="auth-footer">
+                Already have an account?
+                <a href="login.html">Sign in</a>
+            </p>
+
+        </section>
+
+        <p class="bottom-note">
+            Your journey starts here.
+        </p>
+
+    </main>
+
+    <script src="auth.js"></script>
+</body>
+</html>
+

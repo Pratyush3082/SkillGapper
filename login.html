@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | SkillGapper</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+
+    <main class="auth-container">
+
+        <a href="index.html" class="brand">
+            <span class="brand-icon">S</span>
+            Skill<span>Gapper</span>
+        </a>
+
+        <section class="auth-card">
+
+            <div class="auth-heading">
+                <h1>Welcome back!</h1>
+                <p>Sign in to continue your learning journey.</p>
+            </div>
+
+            <form id="loginForm">
+
+                <label for="loginEmail">Email address</label>
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required
+                >
+
+                <label for="loginPassword">Password</label>
+
+                <div class="password-field">
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        data-target="loginPassword">
+                        Show
+                    </button>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-option">
+                        <input type="checkbox" id="rememberMe">
+                        Remember me
+                    </label>
+
+                    <a href="forgot-password.html">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <button type="submit" class="auth-button">
+                    Sign In →
+                </button>
+
+                <p id="loginMessage" class="form-message"
+                   role="status" aria-live="polite"></p>
+
+            </form>
+
+            <p class="auth-footer">
+                Don't have an account?
+                <a href="signup.html">Create an account</a>
+            </p>
+
+        </section>
+
+        <p class="bottom-note">
+            Learn. Improve. Grow.
+        </p>
+
+    </main>
+
+    <script src="auth.js"></script>
+</body>
+</html>
+
